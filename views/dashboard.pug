@@ -1,13 +1,53 @@
 extends layout
+
 block content
   .container
-    h1 Panel Principal
-    p Bienvenido, 
-      strong #{user.username} 
-      | (Rol: #{user.role})
-    ul
+    .profile-banner
+      .profile-info
+        if user.photo
+          img.avatar-lg(src=user.photo alt=`Foto de ${user.username}`)
+        else
+          .avatar-placeholder= user.username.charAt(0).toUpperCase()
+        div
+          h1 Bienvenido, #{user.username}
+          p.subtitle Panel de control de la plataforma interna
+          .meta-row
+            span.badge Rol: #{user.role}
+            span.badge.badge-group Grupo: #{groupName}
+      a.btn.btn-secondary(href="/logout") Cerrar Sesión
+
+    .stats-grid
+      .stat-card
+        .stat-label Tu Grupo Activo
+        .stat-value= groupName
+      .stat-card
+        .stat-label Tus Mensajes
+        .stat-value= stats.messages
       if user.role == 'admin'
-        li: a(href="/users") Gestionar Usuarios (Alta/Baja)
-        li: a(href="/groups") Gestionar Grupos (Alta/Baja)
-      li: a(href="/messages") Buzón de Mensajes del Grupo
-      li: a(href="/logout") Cerrar Sesión
+        .stat-card
+          .stat-label Usuarios Registrados
+          .stat-value= stats.users
+        .stat-card
+          .stat-label Grupos Creados
+          .stat-value= stats.groups
+
+    h2 Módulos Disponibles
+    .modules-grid
+      if user.role == 'admin'
+        .module-card
+          div
+            h3 Gestión de Usuarios
+            p Da de alta cuentas, asigna roles, vincula grupos y sube fotos de perfil.
+          a.btn(href="/users") Abrir Usuarios
+
+        .module-card
+          div
+            h3 Gestión de Grupos
+            p Crea departamentos o equipos de trabajo y administra su estructura.
+          a.btn(href="/groups") Abrir Grupos
+
+      .module-card
+        div
+          h3 Mensajería de Grupo
+          p Comunícate de forma privada con los miembros asignados a tu mismo grupo.
+        a.btn(href="/messages") Abrir Buzón

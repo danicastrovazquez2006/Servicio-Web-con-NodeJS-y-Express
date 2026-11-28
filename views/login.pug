@@ -1,14 +1,20 @@
 extends layout
+
 block content
-  .container
-    h2 Iniciar Sesión
+  .container.login-box
+    .login-header
+      span.login-badge Acceso Corporativo
+      h2 Iniciar Sesión
+      p.subtitle Introduce tus credenciales para entrar al portal
+
     if error
-      p(style="color:red;")= error
+      p.error-msg= error
+
     form(action="/login" method="POST")
-      div
-        label Usuario:
-        input(type="text" name="username" required)
-      div
-        label Contraseña:
-        input(type="password" name="password" required)
-      button(type="submit") Entrar
+      .form-group
+        label(for="username") Nombre de usuario
+        input#username(type="text" name="username" placeholder="Ej. admin" required)
+      .form-group
+        label(for="password") Contraseña
+        input#password(type="password" name="password" placeholder="••••••••" required)
+      button.btn.btn-full(type="submit") Entrar al Portal
