@@ -1,24 +1,37 @@
 extends ../layout
+
 block content
   .container
-    h2 Mensajería Interna de Grupo
-    form(action="/messages/send" method="POST")
+    .toolbar
       div
-        label Enviar a compañero de tu grupo:
-        select(name="receiver_id" required)
+        h2 Mensajería Interna de Grupo
+        p.subtitle Envía mensajes directos a miembros de tu mismo grupo
+      a.btn.btn-secondary(href="/dashboard") Volver al Panel
+
+    form(action="/messages/send" method="POST")
+      .form-group
+        label(for="receiver_id") Destinatario (compañero de grupo)
+        select#receiver_id(name="receiver_id" required)
+          if groupUsers.length === 0
+            option(value="" disabled selected) No hay otros miembros en tu grupo
           each u in groupUsers
             option(value=u.id)= u.username
-      div
-        label Mensaje:
-        textarea(name="content" required)
-      button(type="submit") Enviar Mensaje
+      .form-group
+        label(for="content") Mensaje
+        textarea#content(name="content" placeholder="Escribe tu mensaje aquí..." required)
+      button.btn(type="submit") Enviar Mensaje
 
-    h3 Historial de Mensajes
-    ul
-      each m in messages
-        li 
-          strong #{m.sender_name} ➔ #{m.receiver_name}: 
-          span= m.content 
-          small  (#{m.created_at})
-    br
-    a(href="/dashboard") Volver al Panel
+    h3 Historial de Mensajes (#{messages.length})
+    if messages.length === 0
+      p.subtitle No hay mensajes registrados en tu grupo todavía.
+    else
+      ul.item-list
+        each m in messages
+          li.message-card
+            .message-header
+              span
+                strong #{m.sender_name}
+                |  ➔ 
+                strong #{m.receiver_name}
+              span= m.created_at
+            p.message-body= m.content
