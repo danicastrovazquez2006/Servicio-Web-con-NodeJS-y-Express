@@ -1,0 +1,13 @@
+extends layout
+block content
+  .container
+    h1 Panel Principal
+    p Bienvenido, 
+      strong #{user.username} 
+      | (Rol: #{user.role})
+    ul
+      if user.role == 'admin'
+        li: a(href="/users") Gestionar Usuarios (Alta/Baja)
+        li: a(href="/groups") Gestionar Grupos (Alta/Baja)
+      li: a(href="/messages") Buzón de Mensajes del Grupo
+      li: a(href="/logout") Cerrar Sesión
