@@ -1,28 +1,37 @@
 extends ../layout
+
 block content
   .container
-    h2 Lista de Usuarios
-    a(href="/users/create") + Dar de alta nuevo usuario
-    br
-    br
-    table(border="1" cellpadding="5")
-      tr
-        th Foto
-        th Usuario
-        th Rol
-        th Grupo
-        th Acciones
-      each u in users
+    .toolbar
+      div
+        h2 Gestión de Usuarios
+        p.subtitle Cuentas registradas en el sistema y asignación de grupos
+      a.btn(href="/users/create") + Nuevo Usuario
+
+    table
+      thead
         tr
-          td
-            if u.photo
-              img(src=u.photo width="40" height="40" style="border-radius:50%;")
-            else
-              span Sin foto
-          td= u.username
-          td= u.role
-          td= u.group_name || 'Sin grupo'
-          td
-            a(href=`/users/delete/${u.id}`) Eliminar
-    br
-    a(href="/dashboard") Volver al Panel
+          th Foto
+          th Usuario
+          th Rol
+          th Grupo
+          th Acciones
+      tbody
+        each u in users
+          tr
+            td
+              if u.photo
+                img.avatar-sm(src=u.photo alt=`Foto de ${u.username}`)
+              else
+                span.subtitle Sin foto
+            td
+              strong= u.username
+            td
+              span.badge= u.role
+            td
+              span.badge.badge-group= u.group_name || 'Sin grupo'
+            td
+              a.btn.btn-danger(href=`/users/delete/${u.id}`) Eliminar
+
+    .actions-grid
+      a.btn.btn-secondary(href="/dashboard") Volver al Panel
