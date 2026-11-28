@@ -1,0 +1,18 @@
+extends ../layout
+block content
+  .container
+    h2 Gestión de Grupos
+    form(action="/groups/create" method="POST")
+      div
+        label Nombre del Grupo:
+        input(type="text" name="name" required)
+      button(type="submit") Crear Grupo
+
+    h3 Grupos Existentes
+    ul
+      each g in groups
+        li= g.name 
+          |  - 
+          a(href=`/groups/delete/${g.id}`) Eliminar
+    br
+    a(href="/dashboard") Volver al Panel
