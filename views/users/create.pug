@@ -1,0 +1,28 @@
+extends ../layout
+block content
+  .container
+    h2 Alta de Usuario
+    form(action="/users/create" method="POST" enctype="multipart/form-data")
+      div
+        label Usuario:
+        input(type="text" name="username" required)
+      div
+        label Contraseña:
+        input(type="password" name="password" required)
+      div
+        label Rol:
+        select(name="role")
+          option(value="user") Usuario
+          option(value="admin") Administrador
+      div
+        label Grupo:
+        select(name="group_id")
+          option(value="") Selecciona un grupo
+          each g in groups
+            option(value=g.id)= g.name
+      div
+        label Foto de perfil:
+        input(type="file" name="photo" accept="image/*")
+      button(type="submit") Guardar Usuario
+    br
+    a(href="/users") Volver

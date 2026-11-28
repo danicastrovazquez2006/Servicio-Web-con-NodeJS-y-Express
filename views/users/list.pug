@@ -1,0 +1,28 @@
+extends ../layout
+block content
+  .container
+    h2 Lista de Usuarios
+    a(href="/users/create") + Dar de alta nuevo usuario
+    br
+    br
+    table(border="1" cellpadding="5")
+      tr
+        th Foto
+        th Usuario
+        th Rol
+        th Grupo
+        th Acciones
+      each u in users
+        tr
+          td
+            if u.photo
+              img(src=u.photo width="40" height="40" style="border-radius:50%;")
+            else
+              span Sin foto
+          td= u.username
+          td= u.role
+          td= u.group_name || 'Sin grupo'
+          td
+            a(href=`/users/delete/${u.id}`) Eliminar
+    br
+    a(href="/dashboard") Volver al Panel
