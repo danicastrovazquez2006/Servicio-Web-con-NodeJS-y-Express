@@ -1,0 +1,25 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Práctica NodeJS con Express
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    if user
+      header.navbar
+        .navbar-inner
+          a.brand(href="/dashboard")
+            span.brand-dot
+            | NetGroup Portal
+          nav.nav-links
+            a.nav-btn(href="/dashboard") Panel
+            if user.role == 'admin'
+              a.nav-btn(href="/users") Usuarios
+              a.nav-btn(href="/groups") Grupos
+            a.nav-btn(href="/messages") Mensajes
+            a.nav-btn.nav-btn-logout(href="/logout") Salir
+    main.main-wrapper
+      block content
+    footer.app-footer
+      p Práctica NodeJS con Express
