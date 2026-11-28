@@ -1,0 +1,24 @@
+extends ../layout
+block content
+  .container
+    h2 Mensajería Interna de Grupo
+    form(action="/messages/send" method="POST")
+      div
+        label Enviar a compañero de tu grupo:
+        select(name="receiver_id" required)
+          each u in groupUsers
+            option(value=u.id)= u.username
+      div
+        label Mensaje:
+        textarea(name="content" required)
+      button(type="submit") Enviar Mensaje
+
+    h3 Historial de Mensajes
+    ul
+      each m in messages
+        li 
+          strong #{m.sender_name} ➔ #{m.receiver_name}: 
+          span= m.content 
+          small  (#{m.created_at})
+    br
+    a(href="/dashboard") Volver al Panel
